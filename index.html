@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Script Talk Talk</title>
+	<style>
+	body{
+	background-color: #7d7d7d
+	}
+	</style>
+  </head>
+  <body>
+		<div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v4.0"></script>
+	   <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+	  <font color= "white">
+	  <div style="text-align: center;">
+	  <h2>Script Talk Talk</h2>
+	  </font>
+	  </div>
+      <hr>
+	  <div style="text-align: center;">
+      <textarea id="chatLog" class="chat_log" readonly cols="100" rows="30" ></textarea>
+      <form id="chat">
+	  <textarea rows="1" id="name" class="name" type="text"  cols="30" rows="1" ></textarea>
+      <textarea rows="1" id="message" class="message" type="text" cols="60" rows="1"></textarea>
+      <sup>
+      <input type="submit" class ="chat" value="chat"/>
+      </sup>
+      </form>
+	  </div>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+    <div id="box" class="box">
+    <script src="/socket.io/socket.io.js"></script> <!-- 1 -->
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io(); //1
+      $('#chat').on('submit', function(e){ //2
+        socket.emit('send message', $('#name').val(), $('#message').val());
+        $('#message').val('');
+        $('#message').focus();
+        e.preventDefault();
+      });
+      socket.on('receive message', function(msg){ //3
+        $('#chatLog').append(msg+'\n');
+        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+      });
+      socket.on('change name', function(name){ //4
+        $('#name').val(name);
+      });
+    </script>
+  </body>
+</html>
+
