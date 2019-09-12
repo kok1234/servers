@@ -4,7 +4,7 @@ var http = require('http').Server(app); //1
 var io = require('socket.io')(http);    //1
 
 app.get('/',function(req, res){  //2
-  res.sendFile(__dirname + '/script talk talk.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 var count=1;
